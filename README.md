@@ -1,4 +1,4 @@
-# my-app
+# Crypto Dashboard
 
 demo
 
