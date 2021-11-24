@@ -5,6 +5,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/ping", function (req, res) {
+  console.log("someone pinged here");
   return res.send("pong");
 });
 
