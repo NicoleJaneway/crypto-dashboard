@@ -2,7 +2,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { FiatContext } from "../helpers/FiatContext";
 
 const fiatOptions = [
   {
@@ -28,7 +29,7 @@ const fiatOptions = [
 ];
 
 export default function FiatSelector() {
-  const [fiat, setFiat] = useState("USD");
+  const { fiat, setFiat } = useContext(FiatContext);
 
   const handleChange = (event) => {
     setFiat(event.target.value);
