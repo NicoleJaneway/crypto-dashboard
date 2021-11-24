@@ -35,7 +35,7 @@ Requirements:
 - Integrate with a custom backed that uses CRUD operations
 - Integrate with 3rd party RESTful API
 - Use 5 UI components from material-ui/@core
-- Use reusable component - what does this mean
+- Use reusable component
 
 Accessibility considerations:
 
