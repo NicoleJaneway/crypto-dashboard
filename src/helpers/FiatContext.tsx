@@ -1,11 +1,23 @@
 import { useState, createContext } from "react";
 
-// export const FiatContext = createContext();
+interface IFiatContext {
+  fiat: string;
+  setFiat: (fiat: string) => void;
+}
 
-// export function FiatProvider(props) {
-//   const [fiat, setFiat] = useState([]);
+const defaultFiat = {
+  fiat: "USD",
+  setFiat: (fiat: string) => {},
+};
 
-//   return (
-//     <FiatContext.Provider value={fiat}>{props.children}</FiatContext.Provider>
-//   );
-// }
+export const FiatContext = createContext<IFiatContext>(defaultFiat);
+
+export function FiatProvider(props) {
+  const [fiat, setFiat] = useState(defaultFiat.fiat);
+
+  return (
+    <FiatContext.Provider value={{ fiat, setFiat }}>
+      {props.children}
+    </FiatContext.Provider>
+  );
+}
