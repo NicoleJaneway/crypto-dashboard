@@ -6,15 +6,27 @@ Overview:
 
 - Component #1 - xyz
 
+User interactions:
+
+- Tooltip explains relevant concepts on mouseover
+- Text field to change comparator fiat currency
+
+Material-UI:
+
+- Table
+- Tooltip
+- Text field
+
 Architectural pattern:
 
 - MVVM
 
 API:
 
-- Coinbase
+- [Coinbase](https://developers.coinbase.com/api/v2?javascript#)
   - Payload:
   - Response
+- [CoinGecko](https://www.coingecko.com/en/api/documentation)
 
 Requirements:
 
@@ -26,5 +38,8 @@ Requirements:
 - Use reusable component - what does this mean
 
 Accessibility considerations:
+
+- Use sufficient contrast between text and background color
+- Avoid red / green colors that are difficult for colorblind individuals to disambiguate
 
 Screenshots:
