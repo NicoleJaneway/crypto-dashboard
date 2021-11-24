@@ -16,37 +16,46 @@ function createData(
   rank: number,
   name: string,
   price: number,
+  percChange: number,
   marketCap: number,
-  dayVol: number,
   supply: number
 ) {
-  return { rank, name, price, marketCap, dayVol, supply };
+  return { rank, name, price, percChange, marketCap, supply };
 }
-
-const rows = [
-  createData(1, "Bitcoin", 159, 6.0, 24, 4.0),
-  createData(2, "Ethereumh", 237, 9.0, 37, 4.3),
-  createData(3, "Tether", 262, 16.0, 24, 6.0),
-  createData(4, "XRP", 305, 3.7, 67, 4.3),
-  createData(5, "Bitcoin Cash", 356, 16.0, 49, 3.9),
-];
 
 export default function PriceTable() {
   const [cryptos, setCryptos] = useState([]);
-  const { get, loading } = useFetch("https://demo.firebaseio.com/");
-  const { fiat, setFiat } = useContext(FiatContext);
+  const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
+  const { fiat } = useContext(FiatContext);
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    // get("crypto.json")
-    //   .then((data) => {
-    //     setCryptos(data);
-    //   })
-    //   .catch((error) => console.log("Could not load crypto", error));
+    get(`coins/markets?vs_currency=${fiat}`)
+      .then((data: string[]) => {
+        console.log(data);
+        setCryptos(data);
+      })
+      .catch((error) => console.log("Could not load crypto", error));
   }, []);
 
   useEffect(() => {
     console.log(fiat);
   }, [fiat]);
+
+  useEffect(() => {
+    if (cryptos.length > 0) {
+      setRows([
+        createData(
+          1,
+          cryptos[0].id,
+          cryptos[0].current_price,
+          cryptos[0].price_change_percentage_24h,
+          cryptos[0].market_cap,
+          cryptos[0].circulating_supply
+        ),
+      ]);
+    }
+  }, [cryptos]);
 
   return (
     <TableContainer component={Paper}>
@@ -62,8 +71,13 @@ export default function PriceTable() {
             >
               <TableCell align="right">Price</TableCell>
             </Tooltip>
+            <Tooltip
+              title="Percent change of the price within 24 hours"
+              placement="top-start"
+            >
+              <TableCell align="right">Percent Change</TableCell>
+            </Tooltip>
             <TableCell align="right">Market Capitalization</TableCell>
-            <TableCell align="right">24 Hr Volume</TableCell>
             <TableCell align="right">Supply</TableCell>
           </TableRow>
         </TableHead>
@@ -78,8 +92,8 @@ export default function PriceTable() {
                 {row.name}
               </TableCell>
               <TableCell align="right">{row.price}</TableCell>
+              <TableCell align="right">{row.percChange}</TableCell>
               <TableCell align="right">{row.marketCap}</TableCell>
-              <TableCell align="right">{row.dayVol}</TableCell>
               <TableCell align="right">{row.supply}</TableCell>
             </TableRow>
           ))}
