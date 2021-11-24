@@ -7,6 +7,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 
+import { useState, useEffect } from "react";
+import useFetch from "../helpers/useFetch.js";
+import Loader from "../helpers/Loader.js";
+
 function createData(
   name: string,
   price: number,
@@ -26,8 +30,20 @@ const rows = [
 ];
 
 export default function PriceTable() {
+  const [cryptos, setCryptos] = useState([]);
+  const { get, loading } = useFetch("https://demo.firebaseio.com/");
+
+  useEffect(() => {
+    get("crypto.json")
+      .then((data) => {
+        setCryptos(data);
+      })
+      .catch((error) => console.log("Could not load crypto", error));
+  }, []);
+
   return (
     <TableContainer component={Paper}>
+      {loading && <Loader />}
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
