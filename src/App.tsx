@@ -1,10 +1,27 @@
 import React from "react";
 import "./App.css";
 
+import FiatSelector from "./FiatSelector";
 import PriceTable from "./PriceTable";
 
 function App() {
-  return <PriceTable />;
+  return (
+    <>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+        }}
+      >
+        <div></div>
+        <div></div>
+        <div style={{ justifySelf: "end" }}>
+          <FiatSelector />
+        </div>
+      </div>
+      <PriceTable />
+    </>
+  );
 }
 
 export default App;
