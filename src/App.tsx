@@ -3,6 +3,7 @@ import "./App.css";
 
 import FiatSelector from "./FiatSelector";
 import PriceTable from "./PriceTable";
+import CryptoSearch from "./CryptoSearch";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
         }}
       >
         <div></div>
-        <div></div>
+        <div style={{ justifySelf: "end" }}>
+          <CryptoSearch />
+        </div>
         <div style={{ justifySelf: "end" }}>
           <FiatSelector />
         </div>
