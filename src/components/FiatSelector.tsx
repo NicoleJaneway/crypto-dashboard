@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 const fiatOptions = [
   {
@@ -20,6 +20,10 @@ const fiatOptions = [
   {
     value: "JPY",
     label: "JPY ¥",
+  },
+  {
+    value: "INR",
+    label: "INR ₹",
   },
 ];
 

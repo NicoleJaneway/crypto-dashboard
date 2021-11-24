@@ -1,9 +1,8 @@
 import React from "react";
-import "./App.css";
 
-import FiatSelector from "./FiatSelector";
-import PriceTable from "./PriceTable";
-import CryptoSearch from "./CryptoSearch";
+import FiatSelector from "./components/FiatSelector";
+import PriceTable from "./components/PriceTable";
+import CryptoSearch from "./components/CryptoSearch";
 
 function App() {
   return (
