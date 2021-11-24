@@ -2,12 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import {FiatProvider} from "./helpers/FiatContext"
 
 require("dotenv").config();
 
 ReactDOM.render(
   <React.StrictMode>
+    <FiatProvider>
     <App />
+    </FiatProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
