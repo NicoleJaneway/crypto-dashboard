@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 import logo from "./img/logo512.png";
 
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
@@ -18,39 +19,60 @@ function MyApp() {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
 
+  useEffect(() => {
+    if (theme.palette.mode === "dark") {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [theme]);
+
   return (
     <>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
+          gridTemplateColumns: "60vw 20vw 20vw",
         }}
       >
-        <div style={{ display: "grid", gridTemplateColumns: "3em auto auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "3em auto auto",
+            alignContent: "start",
+          }}
+        >
           <img
             src={logo}
             alt="crypto logo"
             style={{ height: "2em", margin: "0.67em", alignSelf: "start" }}
           />
-          <h1
+          <Typography
+            variant="h4"
+            component="div"
             style={{
               alignSelf: "start",
               marginTop: "0.2em",
               marginLeft: "0.2em",
+              color: "text.primary",
             }}
           >
             Crypto Dashboard
-          </h1>
+          </Typography>
           <Box
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto",
+              justifySelf: "end",
+              alignSelf: "start",
+              marginTop: "2px",
+            }}
             sx={{
-              display: "flex",
               width: "100%",
               alignItems: "center",
-              justifyContent: "center",
-              bgcolor: "background.default",
+              justifyContent: "end",
               color: "text.primary",
               borderRadius: 1,
-              p: 3,
             }}
           >
             {theme.palette.mode} mode
@@ -58,6 +80,7 @@ function MyApp() {
               sx={{ ml: 1 }}
               onClick={colorMode.toggleColorMode}
               color="inherit"
+              style={{ justifySelf: "end", alignSelf: "start" }}
             >
               {theme.palette.mode === "dark" ? (
                 <Brightness7Icon />
