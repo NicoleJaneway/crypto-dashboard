@@ -23,15 +23,23 @@ export default function Toggle() {
         display: "flex",
         alignContent: "center",
         justifyContent: "end",
-        padding: "6px",
+        padding: "8px",
       }}
     >
-      <span role="img" aria-label="light mode" style={{ padding: "4px" }}>
-        🌞
+      <span
+        role="img"
+        aria-label="light mode"
+        style={{ padding: "4px", fontSize: "0.5em", alignSelf: "center" }}
+      >
+        ⚪️
       </span>
       <Switch color="default" onClick={colorMode.toggleColorMode} />
-      <span role="img" aria-label="dark mode" style={{ padding: "4px" }}>
-        🌚
+      <span
+        role="img"
+        aria-label="dark mode"
+        style={{ padding: "4px", fontSize: "0.5em", alignSelf: "center" }}
+      >
+        ⚫️
       </span>
     </div>
   );
