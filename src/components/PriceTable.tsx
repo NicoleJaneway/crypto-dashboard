@@ -14,13 +14,13 @@ import { FiatContext } from "../helpers/FiatContext";
 
 function createData(
   rank: number,
-  name: string,
+  id: string,
   price: number,
   percChange: number,
   marketCap: number,
   supply: number
 ) {
-  return { rank, name, price, percChange, marketCap, supply };
+  return { rank, id, price, percChange, marketCap, supply };
 }
 
 export default function PriceTable() {
@@ -43,19 +43,27 @@ export default function PriceTable() {
   }, [fiat]);
 
   useEffect(() => {
+    const makeTable = (input) => {
+      let info = [];
+      for (let rank = 0; rank < 5; rank++) {
+        let row = createData(
+          rank + 1,
+          input[rank].id,
+          input[rank].current_price,
+          input[rank].price_change_percentage_24h,
+          input[rank].market_cap,
+          input[rank].circulating_supply
+        );
+        info.push(row);
+      }
+      return info;
+    };
+
     if (cryptos.length > 0) {
-      setRows([
-        createData(
-          1,
-          cryptos[0].id,
-          cryptos[0].current_price,
-          cryptos[0].price_change_percentage_24h,
-          cryptos[0].market_cap,
-          cryptos[0].circulating_supply
-        ),
-      ]);
+      setRows(makeTable(cryptos));
+      console.log(makeTable(cryptos));
     }
-  }, [cryptos]);
+  }, [cryptos, fiat]);
 
   return (
     <TableContainer component={Paper}>
@@ -84,12 +92,12 @@ export default function PriceTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="left">{row.rank}</TableCell>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.id}
               </TableCell>
               <TableCell align="right">{row.price}</TableCell>
               <TableCell align="right">{row.percChange}</TableCell>
