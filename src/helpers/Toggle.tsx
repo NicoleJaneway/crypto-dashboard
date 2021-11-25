@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 
 import { ColorModeContext } from "./ColorModeContext";
@@ -26,21 +27,15 @@ export default function Toggle() {
         padding: "8px",
       }}
     >
-      <span
-        role="img"
-        aria-label="light mode"
-        style={{ padding: "4px", fontSize: "0.5em", alignSelf: "center" }}
-      >
-        ⚪️
-      </span>
       <Switch color="default" onClick={colorMode.toggleColorMode} />
-      <span
-        role="img"
-        aria-label="dark mode"
-        style={{ padding: "4px", fontSize: "0.5em", alignSelf: "center" }}
+      <Typography
+        style={{ padding: "4px", fontSize: "0.8em", alignSelf: "center" }}
+        sx={{
+          color: "text.primary",
+        }}
       >
-        ⚫️
-      </span>
+        dark
+      </Typography>
     </div>
   );
 }

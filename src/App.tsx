@@ -3,7 +3,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import logo from "./img/logo512.png";
 
 import Typography from "@mui/material/Typography";
-import Switch from "@mui/material/Switch";
 
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 

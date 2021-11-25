@@ -19,7 +19,14 @@ export default function CryptoSearch() {
       noValidate
       autoComplete="off"
     >
-      <TextField id="fiat-selector" label="Select crypto" variant="outlined" />
+      <TextField
+        id="fiat-selector"
+        label="Select crypto"
+        variant="outlined"
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
     </Box>
   );
 }
