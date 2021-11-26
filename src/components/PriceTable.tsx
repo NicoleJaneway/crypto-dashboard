@@ -15,12 +15,14 @@ import { FiatContext } from "../helpers/FiatContext";
 function createData(
   rank: number,
   id: string,
+  name: string,
+  symbol: string,
   price: number,
   percChange: number,
   marketCap: number,
   supply: number
 ) {
-  return { rank, id, price, percChange, marketCap, supply };
+  return { rank, id, name, symbol, price, percChange, marketCap, supply };
 }
 
 export default function PriceTable() {
@@ -31,9 +33,44 @@ export default function PriceTable() {
 
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
-      .then((data: string[]) => {
-        setCryptos(data);
-      })
+      .then(
+        (
+          data: {
+            id: string;
+            symbol: string;
+            name: string;
+            image: string;
+            current_price: number;
+            market_cap: number;
+            market_cap_rank: number;
+            fully_diluted_valuation: number;
+            total_volume: number;
+            high_24h: number;
+            low_24h: number;
+            price_change_24h: number;
+            price_change_percentage_24h: number;
+            market_cap_change_24h: number;
+            market_cap_change_percentage_24h: number;
+            circulating_supply: number;
+            total_supply: number;
+            max_supply: number;
+            ath: number;
+            ath_change_percentage: number;
+            ath_date: string;
+            atl: number;
+            atl_change_percentage: number;
+            atl_date: string;
+            roi: {
+              times: number;
+              currency: string;
+              percentage: number;
+            };
+            last_updated: number;
+          }[]
+        ): void => {
+          setCryptos(data);
+        }
+      )
       .catch((error) => console.log("Could not load crypto", error));
   }, [fiat]);
 
@@ -44,6 +81,8 @@ export default function PriceTable() {
         let row = createData(
           rank + 1,
           input[rank].id,
+          input[rank].name,
+          input[rank].symbol,
           input[rank].current_price,
           input[rank].price_change_percentage_24h,
           input[rank].market_cap,
@@ -102,7 +141,7 @@ export default function PriceTable() {
             >
               <TableCell align="left">{row.rank}</TableCell>
               <TableCell component="th" scope="row">
-                {row.id}
+                {row.name + " (" + row.symbol.toUpperCase() + ")"}
               </TableCell>
               <TableCell align="right">
                 {Intl.NumberFormat("en-US", {
@@ -115,6 +154,7 @@ export default function PriceTable() {
                 {Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: fiat,
+                  maximumFractionDigits: 0,
                 }).format(row.marketCap)}
               </TableCell>
               <TableCell align="right">

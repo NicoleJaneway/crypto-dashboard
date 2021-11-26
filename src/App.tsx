@@ -46,7 +46,7 @@ function MyApp() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "60vw 20vw 20vw",
+          gridTemplateColumns: "1fr auto auto",
         }}
       >
         <div></div>
