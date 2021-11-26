@@ -12,29 +12,41 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function CryptoSearch() {
-  const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
-  const { post } = useFetch("/");
+  const { get } = useFetch("http://localhost:8080/");
+  const { post, del } = useFetch("http://localhost:8080/");
   const [cryptos, setCryptos] = useState([]);
   const [checkedCrypto, setCheckedCrypto] = useState("");
 
   const handleFetch = (value, status) => {
     if (status) {
-      console.log("POST " + value);
+      post("checked", {
+        coin: value,
+      })
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
     } else {
+      // del("checked", {
+      //   coin: value,
+      // })
+      //   .then((data) => console.log(data))
+      //   .catch((error) => console.log(error));
       console.log("DELETE " + value);
     }
   };
 
+  const handleSelection = (event, value) => {
+    if (value > 0) {
+      post("checked", { coin: value[value.length - 1].id })
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+    }
+  };
+
   useEffect(() => {
-    get("coins/list")
-      .then((data: { id: string; symbol: string; name: string }[]) => {
-        const input = data.filter(
-          (obj) =>
-            obj.id === "dogecoin" ||
-            obj.id === "shiba-inu" ||
-            obj.id === "litecoin"
-        );
-        setCryptos(input);
+    get("marketdata")
+      .then((data: any): void => {
+        console.log(data.body);
+        setCryptos(data.body);
       })
       .catch((error) => console.log("Could not load crypto", error));
   }, []);
@@ -53,8 +65,7 @@ export default function CryptoSearch() {
           multiple
           id="search-crypto"
           options={cryptos}
-          // onChange={handleChange}
-          disableCloseOnSelect
+          onChange={handleSelection}
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
@@ -63,7 +74,7 @@ export default function CryptoSearch() {
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
-                onChange={() => handleFetch(option.name, !selected)}
+                onChange={() => handleFetch(option.id, !selected)}
               />
               {option.name + " (" + option.symbol.toUpperCase() + ")"}
             </li>
