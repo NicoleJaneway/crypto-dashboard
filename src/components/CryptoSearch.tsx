@@ -16,35 +16,32 @@ export default function CryptoSearch() {
   const { post } = useFetch("/");
   const [cryptos, setCryptos] = useState([]);
   const [searchedCrypto, setSearchedCrypto] = useState("");
-  const [selectedCrypto, setSelectedCrypto] = useState([]);
-
-  const handleChange = (event) => {
-    setSearchedCrypto(event.target.value);
-  };
-
-  const handleCheckChange = (event) => {
-    setSelectedCrypto(event.target.value);
-  };
 
   useEffect(() => {
-    console.log(selectedCrypto);
-  }, [selectedCrypto]);
+    console.log(searchedCrypto);
+  }, [searchedCrypto]);
 
   useEffect(() => {
     get("coins/list")
       .then((data: { id: string; symbol: string; name: string }[]) => {
-        console.log(data);
         const input = data.filter(
           (obj) =>
             obj.id === "dogecoin" ||
             obj.id === "shiba-inu" ||
             obj.id === "litecoin"
         );
-        console.log(input);
         setCryptos(input);
       })
       .catch((error) => console.log("Could not load crypto", error));
   }, []);
+
+  const handleChange = (value, selected) => {
+    if (selected) {
+      console.log("POST " + value);
+    } else {
+      console.log("DELETE " + value);
+    }
+  };
 
   return (
     <>
@@ -58,7 +55,7 @@ export default function CryptoSearch() {
       >
         <Autocomplete
           multiple
-          id="checkboxes-tags-demo"
+          id="search-crypto"
           options={cryptos}
           disableCloseOnSelect
           getOptionLabel={(option) => option.name}
@@ -69,7 +66,7 @@ export default function CryptoSearch() {
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
-                onChange={handleCheckChange}
+                onChange={() => handleChange(option.id, !selected)}
               />
               {option.name + " (" + option.symbol.toUpperCase() + ")"}
             </li>
@@ -82,8 +79,6 @@ export default function CryptoSearch() {
               InputLabelProps={{
                 shrink: true,
               }}
-              value={searchedCrypto}
-              onChange={handleChange}
             />
           )}
         />
