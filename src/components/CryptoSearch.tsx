@@ -11,6 +11,8 @@ export default function CryptoSearch() {
   };
 
   return (
+    // const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
+
     <Box
       component="form"
       sx={{

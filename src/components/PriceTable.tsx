@@ -36,7 +36,7 @@ export default function PriceTable() {
         setCryptos(data);
       })
       .catch((error) => console.log("Could not load crypto", error));
-  }, []);
+  }, [fiat]);
 
   useEffect(() => {
     console.log(fiat);
@@ -71,22 +71,33 @@ export default function PriceTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Rank</TableCell>
-            <TableCell>Name</TableCell>
             <Tooltip
-              title="Price of the cryptocurrency against the specified fiat currency"
+              title="Rank based on market capitalization"
               placement="top-start"
+            >
+              <TableCell>Rank</TableCell>
+            </Tooltip>
+            <Tooltip title="Identifier" placement="top-start">
+              <TableCell>Name</TableCell>
+            </Tooltip>
+            <Tooltip
+              title="Price against specified fiat currency"
+              placement="top-end"
             >
               <TableCell align="right">Price</TableCell>
             </Tooltip>
-            <Tooltip
-              title="Percent change of the price within 24 hours"
-              placement="top-start"
-            >
+            <Tooltip title="Percent change within 24 hours" placement="top-end">
               <TableCell align="right">Percent Change</TableCell>
             </Tooltip>
-            <TableCell align="right">Market Capitalization</TableCell>
-            <TableCell align="right">Supply</TableCell>
+            <Tooltip title="Total value" placement="top-end">
+              <TableCell align="right">Market Capitalization</TableCell>
+            </Tooltip>
+            <Tooltip
+              title="Count currently circulating in the market"
+              placement="top-end"
+            >
+              <TableCell align="right">Supply</TableCell>
+            </Tooltip>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -99,10 +110,25 @@ export default function PriceTable() {
               <TableCell component="th" scope="row">
                 {row.id}
               </TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell align="right">{row.percChange}</TableCell>
-              <TableCell align="right">{row.marketCap}</TableCell>
-              <TableCell align="right">{row.supply}</TableCell>
+              <TableCell align="right">
+                {Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: fiat,
+                }).format(row.price)}
+              </TableCell>
+              <TableCell align="right">{row.percChange.toFixed(3)}</TableCell>
+              <TableCell align="right">
+                {Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: fiat,
+                }).format(row.marketCap)}
+              </TableCell>
+              <TableCell align="right">
+                {row.supply.toLocaleString(undefined, {
+                  minimumFractionDigits: 3,
+                  maximumFractionDigits: 3,
+                })}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
