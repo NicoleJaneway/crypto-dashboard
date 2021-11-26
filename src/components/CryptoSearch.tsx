@@ -9,6 +9,7 @@ export default function CryptoSearch() {
   const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
   const [cryptos, setCryptos] = useState([]);
   const [searchedCrypto, setSearchedCrypto] = useState("");
+  const [cleanedQuery, setCleanedQuery] = useState("");
 
   const searchData = [];
 
@@ -26,13 +27,17 @@ export default function CryptoSearch() {
 
   useEffect(() => {
     console.log(searchedCrypto);
+    setCleanedQuery(searchedCrypto.trim().toLowerCase());
   }, [searchedCrypto]);
 
   useEffect(() => {
     if (cryptos.length > 0) {
-      // searchData.push(
-      // cryptos.forEach(console.log(obj));
-      // )
+      let searchString = ""
+
+      cryptos.forEach((obj) => {
+        searchString = obj.id + " " + obj.name + " " + obj.symbol 
+        searchData.push(searchString)
+      });
     }
   }, [cryptos]);
 
