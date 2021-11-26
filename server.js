@@ -5,7 +5,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
 
-const checked = [];
+let checked = [];
 
 app.get("/ping", function (req, res) {
   console.log("someone pinged here");
@@ -17,16 +17,26 @@ app.get("/checked", function (req, res) {
 });
 
 app.post("/checked", function (req, res) {
-  checked.push(req.body["coin"]);
-  return res.send("success");
+  const id = req.body["coin"];
+  if (!checked.includes(id)) {
+    checked.push(id);
+    return res.send("success");
+  }
+  return res.send("error");
 });
 
-app.delete("/checked/:id", function (req, res) {
-  //TODO
-  return res.send("remove");
+app.delete("/checked", function (req, res) {
+  const id = req.body["coin"];
+  if (checked.includes(id)) {
+    checked = checked.filter((coin) => coin !== id);
+    return res.send("removed");
+  }
+  return res.send("error");
 });
 
-// app.post("/cryptolist", function )
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.listen(process.env.PORT || 8080);
 
