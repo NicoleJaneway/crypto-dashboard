@@ -27,7 +27,9 @@ function createData(
 
 export default function PriceTable() {
   const [cryptos, setCryptos] = useState([]);
+  const [marketData, setMarketData] = useState([]);
   const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
+  const { post } = useFetch("http://localhost:8080/");
   const { fiat } = useContext(FiatContext);
   const [rows, setRows] = useState([]);
 
@@ -73,6 +75,28 @@ export default function PriceTable() {
       )
       .catch((error) => console.log("Could not load crypto", error));
   }, [fiat]);
+
+  useEffect(() => {
+    if (cryptos.length > 0) {
+      const makeMarketData = (data) => {
+        let info = [];
+        info = data.filter((obj) => obj.market_cap_rank > 5);
+        return info;
+      };
+      console.log(makeMarketData(cryptos));
+      setMarketData(makeMarketData(cryptos));
+    }
+  }, [cryptos]);
+
+  useEffect(() => {
+    if (marketData.length > 0) {
+      post("marketdata", {
+        body: marketData,
+      })
+        .then((data) => console.log("From post: " + data))
+        .catch((error) => console.log(error));
+    }
+  }, [marketData]);
 
   useEffect(() => {
     const makeTable = (input) => {

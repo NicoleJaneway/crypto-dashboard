@@ -4,6 +4,8 @@ const path = require("path");
 const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
 
 let marketData = [];
 let checked = [];
