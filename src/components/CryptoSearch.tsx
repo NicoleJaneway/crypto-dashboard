@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import useFetch from "../helpers/useFetch";
-import Loader from "../helpers/Loader";
 
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
@@ -14,21 +13,33 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function CryptoSearch() {
   const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
+  const { post } = useFetch("/");
   const [cryptos, setCryptos] = useState([]);
   const [searchedCrypto, setSearchedCrypto] = useState("");
-  const [cleanedQuery, setCleanedQuery] = useState("");
-
-  const searchData = [];
+  const [selectedCrypto, setSelectedCrypto] = useState([]);
 
   const handleChange = (event) => {
     setSearchedCrypto(event.target.value);
   };
 
+  const handleCheckChange = (event) => {
+    setSelectedCrypto(event.target.value);
+  };
+
+  useEffect(() => {
+    console.log(selectedCrypto);
+  }, [selectedCrypto]);
+
   useEffect(() => {
     get("coins/list")
       .then((data: { id: string; symbol: string; name: string }[]) => {
         console.log(data);
-        const input = data.filter((obj) => obj.id === "bitcoin");
+        const input = data.filter(
+          (obj) =>
+            obj.id === "dogecoin" ||
+            obj.id === "shiba-inu" ||
+            obj.id === "litecoin"
+        );
         console.log(input);
         setCryptos(input);
       })
@@ -50,7 +61,7 @@ export default function CryptoSearch() {
           id="checkboxes-tags-demo"
           options={cryptos}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.symbol}
+          getOptionLabel={(option) => option.name}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -58,6 +69,7 @@ export default function CryptoSearch() {
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
+                onChange={handleCheckChange}
               />
               {option.name + " (" + option.symbol.toUpperCase() + ")"}
             </li>
