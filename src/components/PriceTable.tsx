@@ -32,14 +32,9 @@ export default function PriceTable() {
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
       .then((data: string[]) => {
-        console.log(data);
         setCryptos(data);
       })
       .catch((error) => console.log("Could not load crypto", error));
-  }, [fiat]);
-
-  useEffect(() => {
-    console.log(fiat);
   }, [fiat]);
 
   useEffect(() => {
@@ -61,7 +56,6 @@ export default function PriceTable() {
 
     if (cryptos.length > 0) {
       setRows(makeTable(cryptos));
-      console.log(makeTable(cryptos));
     }
   }, [cryptos, fiat]);
 
