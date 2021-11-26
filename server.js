@@ -5,11 +5,21 @@ const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
 
+let marketData = [];
 let checked = [];
 
 app.get("/ping", function (req, res) {
   console.log("someone pinged here");
   return res.send("pong");
+});
+
+app.get("/marketdata", function (req, res) {
+  return res.send(marketData);
+});
+
+app.post("/marketdata", function (req, res) {
+  marketData = req.body;
+  return res.send("success");
 });
 
 app.get("/checked", function (req, res) {

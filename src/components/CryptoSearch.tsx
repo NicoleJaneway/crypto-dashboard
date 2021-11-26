@@ -15,11 +15,15 @@ export default function CryptoSearch() {
   const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
   const { post } = useFetch("/");
   const [cryptos, setCryptos] = useState([]);
-  const [searchedCrypto, setSearchedCrypto] = useState("");
+  const [checkedCrypto, setCheckedCrypto] = useState("");
 
-  useEffect(() => {
-    console.log(searchedCrypto);
-  }, [searchedCrypto]);
+  const handleFetch = (value, status) => {
+    if (status) {
+      console.log("POST " + value);
+    } else {
+      console.log("DELETE " + value);
+    }
+  };
 
   useEffect(() => {
     get("coins/list")
@@ -35,14 +39,6 @@ export default function CryptoSearch() {
       .catch((error) => console.log("Could not load crypto", error));
   }, []);
 
-  const handleChange = (value, selected) => {
-    if (selected) {
-      console.log("POST " + value);
-    } else {
-      console.log("DELETE " + value);
-    }
-  };
-
   return (
     <>
       <Box
@@ -57,6 +53,7 @@ export default function CryptoSearch() {
           multiple
           id="search-crypto"
           options={cryptos}
+          // onChange={handleChange}
           disableCloseOnSelect
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, { selected }) => (
@@ -66,7 +63,7 @@ export default function CryptoSearch() {
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
-                onChange={() => handleChange(option.id, !selected)}
+                onChange={() => handleFetch(option.name, !selected)}
               />
               {option.name + " (" + option.symbol.toUpperCase() + ")"}
             </li>
