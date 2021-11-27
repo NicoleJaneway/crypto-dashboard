@@ -65,7 +65,7 @@ function MyApp() {
 export default function App() {
   let mode: any;
   let setMode: any;
-  [mode, setMode] = React.useState("light");
+  [mode, setMode] = React.useState("dark");
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {

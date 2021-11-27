@@ -15,37 +15,61 @@ export default function CryptoSearch() {
   const { get } = useFetch("http://localhost:8080/");
   const { post, del } = useFetch("http://localhost:8080/");
   const [cryptos, setCryptos] = useState([]);
-  const [checkedCrypto, setCheckedCrypto] = useState("");
+  const [checkedCrypto, setCheckedCrypto] = useState([]);
 
-  const handleFetch = (value, status) => {
-    if (status) {
-      post("checked", {
-        coin: value,
-      })
-        .then((data) => console.log(data))
-        .catch((error) => console.log(error));
-    } else {
-      // del("checked", {
-      //   coin: value,
-      // })
-      //   .then((data) => console.log(data))
-      //   .catch((error) => console.log(error));
-      console.log("DELETE " + value);
+  // const handleFetch = (value, status) => {
+  //   if (status) {
+  //     post("checked", {
+  //       coin: value,
+  //     })
+  //       .then((data) => console.log(data))
+  //       .catch((error) => console.log(error));
+  //   } else {
+  //     del("checked", {
+  //       coin: value,
+  //     })
+  //       .then((data) => console.log(data))
+  //       .catch((error) => console.log(error));
+  //     console.log("DELETE " + value);
+  //   }
+  // };
+
+  const handleSelection = (event, values) => {
+    console.log("within function: ", checkedCrypto);
+    let ids = values.map((value) => value.id);
+    setCheckedCrypto(values.map((value) => value.id));
+    console.log({ ids });
+    let diff = ids.filter((x) => !checkedCrypto.includes(x));
+    console.log("1: ", diff);
+    if (checkedCrypto.filter((x) => !ids.includes(x)).length > 0) {
+      diff.push(checkedCrypto.filter((x) => !ids.includes(x)));
+      console.log("2: ", diff);
     }
-  };
-
-  const handleSelection = (event, value) => {
-    if (value > 0) {
-      post("checked", { coin: value[value.length - 1].id })
-        .then((data) => console.log(data))
-        .catch((error) => console.log(error));
+    if (values.length > 0 && values.length > checkedCrypto.length) {
+      post("checked", {
+        coin: diff,
+      });
+      console.log("POST ", diff);
+    } else {
+      let len = 0;
+      diff.forEach((el) => (len += 1));
+      console.log("length ", len);
+      // if (diff.length === 1) {
+      //   console.log("DELETE ", diff);
+      // } else if (diff.length > 1) {
+      //   console.log("DELETE EVERYTHING");
+      // }
     }
   };
 
   useEffect(() => {
+    console.log("outside function: ", checkedCrypto);
+  }, [checkedCrypto]);
+
+  useEffect(() => {
     get("marketdata")
       .then((data: any): void => {
-        console.log(data.body);
+        // console.log(data.body);
         setCryptos(data.body);
       })
       .catch((error) => console.log("Could not load crypto", error));
@@ -64,7 +88,7 @@ export default function CryptoSearch() {
         <Autocomplete
           multiple
           id="search-crypto"
-          options={cryptos}
+          options={cryptos || []}
           onChange={handleSelection}
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, { selected }) => (
@@ -74,7 +98,6 @@ export default function CryptoSearch() {
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
-                onChange={() => handleFetch(option.id, !selected)}
               />
               {option.name + " (" + option.symbol.toUpperCase() + ")"}
             </li>

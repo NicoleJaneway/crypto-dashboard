@@ -83,7 +83,6 @@ export default function PriceTable() {
         info = data.filter((obj) => obj.market_cap_rank > 5);
         return info;
       };
-      console.log(makeMarketData(cryptos));
       setMarketData(makeMarketData(cryptos));
     }
   }, [cryptos]);
@@ -92,9 +91,7 @@ export default function PriceTable() {
     if (marketData.length > 0) {
       post("marketdata", {
         body: marketData,
-      })
-        .then((data) => console.log("From post: " + data))
-        .catch((error) => console.log(error));
+      }).catch((error) => console.log(error));
     }
   }, [marketData]);
 
