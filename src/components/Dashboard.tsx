@@ -26,6 +26,8 @@ export default function Dashboard() {
   const [market, setMarket] = useState([]);
   const [rows, setRows] = useState([]);
   const [cryptoList, setCryptoList] = useState([]);
+  const [checkedCrypto, setCheckedCrypto] = useState([]);
+  const [newRows, setNewRows] = useState([]);
 
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
@@ -117,6 +119,38 @@ export default function Dashboard() {
     }
   }, [market]);
 
+  useEffect(() => {
+    console.log("Checked: ", checkedCrypto);
+    let ids = [];
+    let info = [];
+    checkedCrypto.forEach((obj) => {
+      ids.push(obj.id);
+    });
+    console.log("ids: ", ids);
+    const makeTable = (input) => {
+      ids.forEach((id) => {
+        let obj = input.filter((obj) => obj.id === id)[0];
+        console.log("Object: ", obj);
+        let row = createData(
+          obj.market_cap_rank + 1,
+          obj.id,
+          obj.name,
+          obj.symbol,
+          obj.current_price,
+          obj.price_change_percentage_24h,
+          obj.market_cap,
+          obj.circulating_supply
+        );
+        info.push(row);
+      });
+      return info;
+    };
+
+    if (checkedCrypto.length > 0) {
+      setNewRows(makeTable(market));
+    }
+  }, [checkedCrypto]);
+
   return (
     <>
       <div
@@ -127,13 +161,16 @@ export default function Dashboard() {
       >
         <div></div>
         <div style={{ justifySelf: "end" }}>
-          <CryptoSearch cryptos={cryptoList} />
+          <CryptoSearch
+            cryptos={cryptoList}
+            setCheckedCrypto={setCheckedCrypto}
+          />
         </div>
         <div style={{ justifySelf: "end" }}>
           <FiatSelector />
         </div>
       </div>
-      <PriceTable rows={rows} />
+      <PriceTable rows={rows} newRows={newRows} />
     </>
   );
 }

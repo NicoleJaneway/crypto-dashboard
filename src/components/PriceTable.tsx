@@ -10,7 +10,9 @@ import Tooltip from "@mui/material/Tooltip";
 import { FiatContext } from "../helpers/FiatContext";
 import { useContext } from "react";
 
-export default function PriceTable({ rows }) {
+import NewRows from "./NewRows";
+
+export default function PriceTable({ rows, newRows }) {
   const { fiat } = useContext(FiatContext);
 
   return (
@@ -48,6 +50,7 @@ export default function PriceTable({ rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
+          <NewRows newRows={newRows} fiat={fiat} />
           {rows.map((row) => (
             <TableRow
               key={row.id}

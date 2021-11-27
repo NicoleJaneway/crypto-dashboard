@@ -11,43 +11,10 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function CryptoSearch({ cryptos }) {
-  const { get } = useFetch("http://localhost:8080/");
-  const { post, del } = useFetch("http://localhost:8080/");
-  const [checkedCrypto, setCheckedCrypto] = useState([]);
-
+export default function CryptoSearch({ cryptos, setCheckedCrypto }) {
   const handleSelection = (event, values) => {
-    let ids = values.map((value) => value.id);
-    setCheckedCrypto(values.map((value) => value.id));
-    console.log({ ids });
-    let diff = ids.filter((x) => !checkedCrypto.includes(x));
-    console.log("1: ", diff);
-    if (checkedCrypto.filter((x) => !ids.includes(x)).length > 0) {
-      checkedCrypto
-        .filter((x) => !ids.includes(x))
-        .forEach((element) => diff.push(element));
-      console.log("2: ", diff);
-    }
-    if (values.length > 0 && values.length > checkedCrypto.length) {
-      post("checked", {
-        coin: diff,
-      });
-      console.log("POST ", diff);
-    } else {
-      let len = 0;
-      diff.forEach((el) => (len += 1));
-      console.log("length ", len);
-      if (diff.length === 1) {
-        console.log("DELETE ", diff);
-      } else if (diff.length > 1) {
-        console.log("DELETE EVERYTHING");
-      }
-    }
+    setCheckedCrypto(values);
   };
-
-  useEffect(() => {
-    console.log("outside function: ", checkedCrypto);
-  }, [checkedCrypto]);
 
   return (
     <>
@@ -61,6 +28,7 @@ export default function CryptoSearch({ cryptos }) {
       >
         <Autocomplete
           multiple
+          disableCloseOnSelect
           id="search-crypto"
           options={cryptos || []}
           onChange={handleSelection}
