@@ -40,6 +40,7 @@ Requirements:
 Accessibility considerations:
 
 - Provide alt text on images
+- TextField with an id and label creates the proper markup
 - Use sufficient contrast between text and background color
 - Avoid red / green colors that are difficult for colorblind individuals to disambiguate
 

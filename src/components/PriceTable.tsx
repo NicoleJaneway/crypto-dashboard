@@ -7,67 +7,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 
-import { useState, useEffect, useContext } from "react";
-import useFetch from "../helpers/useFetch";
-import Loader from "../helpers/Loader";
 import { FiatContext } from "../helpers/FiatContext";
+import { useContext } from "react";
 
-function createData(
-  rank: number,
-  id: string,
-  price: number,
-  percChange: number,
-  marketCap: number,
-  supply: number
-) {
-  return { rank, id, price, percChange, marketCap, supply };
-}
+import NewRows from "./NewRows";
 
-export default function PriceTable() {
-  const [cryptos, setCryptos] = useState([]);
-  const { get, loading } = useFetch("https://api.coingecko.com/api/v3/");
+export default function PriceTable({ rows, newRows }) {
   const { fiat } = useContext(FiatContext);
-  const [rows, setRows] = useState([]);
-
-  useEffect(() => {
-    get(`coins/markets?vs_currency=${fiat}`)
-      .then((data: string[]) => {
-        console.log(data);
-        setCryptos(data);
-      })
-      .catch((error) => console.log("Could not load crypto", error));
-  }, [fiat]);
-
-  useEffect(() => {
-    console.log(fiat);
-  }, [fiat]);
-
-  useEffect(() => {
-    const makeTable = (input) => {
-      let info = [];
-      for (let rank = 0; rank < 5; rank++) {
-        let row = createData(
-          rank + 1,
-          input[rank].id,
-          input[rank].current_price,
-          input[rank].price_change_percentage_24h,
-          input[rank].market_cap,
-          input[rank].circulating_supply
-        );
-        info.push(row);
-      }
-      return info;
-    };
-
-    if (cryptos.length > 0) {
-      setRows(makeTable(cryptos));
-      console.log(makeTable(cryptos));
-    }
-  }, [cryptos, fiat]);
 
   return (
     <TableContainer component={Paper}>
-      {loading && <Loader />}
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -101,6 +50,7 @@ export default function PriceTable() {
           </TableRow>
         </TableHead>
         <TableBody>
+          <NewRows newRows={newRows} fiat={fiat} />
           {rows.map((row) => (
             <TableRow
               key={row.id}
@@ -108,7 +58,7 @@ export default function PriceTable() {
             >
               <TableCell align="left">{row.rank}</TableCell>
               <TableCell component="th" scope="row">
-                {row.id}
+                {row.name + " (" + row.symbol.toUpperCase() + ")"}
               </TableCell>
               <TableCell align="right">
                 {Intl.NumberFormat("en-US", {
@@ -121,6 +71,7 @@ export default function PriceTable() {
                 {Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: fiat,
+                  maximumFractionDigits: 0,
                 }).format(row.marketCap)}
               </TableCell>
               <TableCell align="right">
