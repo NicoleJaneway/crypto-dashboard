@@ -3,7 +3,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Tooltip from "@mui/material/Tooltip";
 
-export default function TableHeader() {
+export default function TableHeader(): JSX.Element {
   return (
     <TableHead>
       <TableRow>

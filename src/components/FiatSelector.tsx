@@ -28,7 +28,7 @@ const fiatOptions = [
   },
 ];
 
-export default function FiatSelector() {
+export default function FiatSelector(): JSX.Element {
   const { fiat, setFiat } = useContext(FiatContext);
 
   const handleChange = (event) => {

@@ -27,7 +27,11 @@ export default function Toggle() {
         padding: "8px",
       }}
     >
-      <Switch color="default" onClick={colorMode.toggleColorMode} />
+      <Switch
+        defaultChecked
+        color="default"
+        onClick={colorMode.toggleColorMode}
+      />
       <Typography
         style={{ padding: "4px", fontSize: "0.8em", alignSelf: "center" }}
         sx={{

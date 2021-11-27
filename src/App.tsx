@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard";
 
 import { ColorModeContext } from "./helpers/ColorModeContext";
 
-export default function App() {
+export default function App(): JSX.Element {
   let mode: any;
   let setMode: any;
   [mode, setMode] = useState("dark");

@@ -11,7 +11,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function CryptoSearch({ cryptos }) {
+export default function CryptoSearch({ cryptos }): JSX.Element {
   const [checkedCrypto, setCheckedCrypto] = useState([]);
   const { post, del } = useFetch("http://localhost:8080/");
 

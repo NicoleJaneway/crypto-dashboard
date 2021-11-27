@@ -37,7 +37,7 @@ const makeBaseTable = (input, listProperties) => {
   return filtered;
 };
 
-export default function PriceTable({ cryptoList, setCryptoList }) {
+export default function PriceTable({ cryptoList, setCryptoList }): JSX.Element {
   const { get } = useFetch("https://api.coingecko.com/api/v3/");
 
   const { fiat } = useContext(FiatContext);

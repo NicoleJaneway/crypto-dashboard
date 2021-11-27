@@ -3,7 +3,7 @@ import logo from "../img/logo512.png";
 import Typography from "@mui/material/Typography";
 import Toggle from "../helpers/Toggle";
 
-export default function Header() {
+export default function Header(): JSX.Element {
   return (
     <>
       <div
