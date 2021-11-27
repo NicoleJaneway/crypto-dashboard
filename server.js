@@ -15,14 +15,14 @@ app.get("/ping", function (req, res) {
   return res.send("pong");
 });
 
-app.get("/marketdata", function (req, res) {
-  return res.send(marketData);
-});
+// app.get("/marketdata", function (req, res) {
+//   return res.send(marketData);
+// });
 
-app.post("/marketdata", function (req, res) {
-  marketData = req.body;
-  return res.send("success");
-});
+// app.post("/marketdata", function (req, res) {
+//   marketData = req.body;
+//   return res.send("success");
+// });
 
 app.get("/checked", function (req, res) {
   return res.send(checked);
@@ -44,6 +44,11 @@ app.delete("/checked", function (req, res) {
     return res.send("removed");
   }
   return res.send("error");
+});
+
+app.delete("/checked/clear", function (req, res) {
+  checked = [];
+  return res.send("cleared");
 });
 
 app.get("/", function (req, res) {

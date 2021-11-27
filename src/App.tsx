@@ -1,20 +1,11 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
 
 import { ColorModeContext } from "./helpers/ColorModeContext";
-
-function MyApp() {
-  return (
-    <>
-      <Header />
-      <Dashboard />
-    </>
-  );
-}
 
 export default function App() {
   let mode: any;
@@ -42,7 +33,8 @@ export default function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <MyApp />
+        <Header />
+        <Dashboard />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
