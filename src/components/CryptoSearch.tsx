@@ -11,38 +11,21 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function CryptoSearch() {
+export default function CryptoSearch({ cryptos }) {
   const { get } = useFetch("http://localhost:8080/");
   const { post, del } = useFetch("http://localhost:8080/");
-  const [cryptos, setCryptos] = useState([]);
   const [checkedCrypto, setCheckedCrypto] = useState([]);
 
-  // const handleFetch = (value, status) => {
-  //   if (status) {
-  //     post("checked", {
-  //       coin: value,
-  //     })
-  //       .then((data) => console.log(data))
-  //       .catch((error) => console.log(error));
-  //   } else {
-  //     del("checked", {
-  //       coin: value,
-  //     })
-  //       .then((data) => console.log(data))
-  //       .catch((error) => console.log(error));
-  //     console.log("DELETE " + value);
-  //   }
-  // };
-
   const handleSelection = (event, values) => {
-    console.log("within function: ", checkedCrypto);
     let ids = values.map((value) => value.id);
     setCheckedCrypto(values.map((value) => value.id));
     console.log({ ids });
     let diff = ids.filter((x) => !checkedCrypto.includes(x));
     console.log("1: ", diff);
     if (checkedCrypto.filter((x) => !ids.includes(x)).length > 0) {
-      diff.push(checkedCrypto.filter((x) => !ids.includes(x)));
+      checkedCrypto
+        .filter((x) => !ids.includes(x))
+        .forEach((element) => diff.push(element));
       console.log("2: ", diff);
     }
     if (values.length > 0 && values.length > checkedCrypto.length) {
@@ -54,26 +37,17 @@ export default function CryptoSearch() {
       let len = 0;
       diff.forEach((el) => (len += 1));
       console.log("length ", len);
-      // if (diff.length === 1) {
-      //   console.log("DELETE ", diff);
-      // } else if (diff.length > 1) {
-      //   console.log("DELETE EVERYTHING");
-      // }
+      if (diff.length === 1) {
+        console.log("DELETE ", diff);
+      } else if (diff.length > 1) {
+        console.log("DELETE EVERYTHING");
+      }
     }
   };
 
   useEffect(() => {
     console.log("outside function: ", checkedCrypto);
   }, [checkedCrypto]);
-
-  useEffect(() => {
-    get("marketdata")
-      .then((data: any): void => {
-        // console.log(data.body);
-        setCryptos(data.body);
-      })
-      .catch((error) => console.log("Could not load crypto", error));
-  }, []);
 
   return (
     <>

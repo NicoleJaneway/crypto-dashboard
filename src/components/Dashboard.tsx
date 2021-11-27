@@ -25,6 +25,7 @@ export default function Dashboard() {
   const { fiat } = useContext(FiatContext);
   const [market, setMarket] = useState([]);
   const [rows, setRows] = useState([]);
+  const [cryptoList, setCryptoList] = useState([]);
 
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
@@ -90,9 +91,31 @@ export default function Dashboard() {
 
     if (market.length > 0) {
       setRows(makeTable(market));
-      //   console.log(makeTable(market));
     }
   }, [market, fiat]);
+
+  useEffect(() => {
+    const makeList = (input) => {
+      let info = [];
+      let filtered = [];
+      info = input.filter((obj) => obj.market_cap_rank > 5);
+      const listProperties = ["id", "name", "symbol"];
+
+      info.forEach((obj) => {
+        let newObj = {};
+        listProperties.forEach((prop) => {
+          newObj[prop] = obj[prop];
+        });
+        filtered.push(newObj);
+      });
+
+      return filtered;
+    };
+
+    if (market.length > 0 && cryptoList.length === 0) {
+      setCryptoList(makeList(market));
+    }
+  }, [market]);
 
   return (
     <>
@@ -104,7 +127,7 @@ export default function Dashboard() {
       >
         <div></div>
         <div style={{ justifySelf: "end" }}>
-          <CryptoSearch />
+          <CryptoSearch cryptos={cryptoList} />
         </div>
         <div style={{ justifySelf: "end" }}>
           <FiatSelector />
