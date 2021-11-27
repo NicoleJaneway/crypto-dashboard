@@ -21,7 +21,7 @@ export default function LoadTable({ setTrackedCrypto }) {
         justifyContent: "center",
       }}
     >
-      <Button variant="contained" onClick={handleClick}>
+      <Button variant="outlined" color="warning" onClick={handleClick}>
         Load Table
       </Button>
     </div>
