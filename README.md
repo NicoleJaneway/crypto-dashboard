@@ -46,14 +46,14 @@ Accessibility considerations:
 
 Screenshots:
 
-###### Base table compares top 5 cryptocurrencies by market cap
+#### Base table compares top 5 cryptocurrencies by market cap
 
 *Makes a GET request to 3rd-party API*
 ![base table](img/00_base_table.png)
 
 
 
-###### Search functionality allows user to add additional cryptocurrencies from the top 100 to the table*
+##### Search functionality allows user to add additional cryptocurrencies from the top 100 to the table*
 
 *Each change to the currencies selected makes a POST / DELETE request to express backend*
 ![search](img/01_search.png)
