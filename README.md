@@ -46,17 +46,28 @@ Accessibility considerations:
 
 Screenshots:
 
-*Base table compares top 5 cryptocurrencies by market cap*
+###### Base table compares top 5 cryptocurrencies by market cap
+
+*Makes a GET request to 3rd-party API*
 ![base table](img/00_base_table.png)
 
-*Search functionality allows user to add additional cryptocurrencies from the top 100 to the table*
+
+
+###### Search functionality allows user to add additional cryptocurrencies from the top 100 to the table*
+
 *Each change to the currencies selected makes a POST / DELETE request to express backend*
 ![search](img/01_search.png)
 
-*Load button adds selected cryptocurrencies to the table*
+
+###### Load button adds selected cryptocurrencies to the table*
+
 *Makes a GET request to express backend*
 ![load](img/02_load.png)
 
-*Removing a cryptocurrency from the selected list will also remove it from the table the next time the table is loaded*
+
+
+###### Removing a cryptocurrency from the selected list will also remove it from the table the next time the table is loaded*
+
 *Makes a DELETE request to express backend*
+
 ![remove](img/03_remove.png)
