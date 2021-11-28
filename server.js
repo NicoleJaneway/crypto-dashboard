@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 app.use(express.static(path.join(__dirname, "build")));
@@ -7,22 +6,12 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 
-let marketData = [];
 let checked = [];
 
 app.get("/ping", function (req, res) {
   console.log("someone pinged here");
   return res.send("pong");
 });
-
-// app.get("/marketdata", function (req, res) {
-//   return res.send(marketData);
-// });
-
-// app.post("/marketdata", function (req, res) {
-//   marketData = req.body;
-//   return res.send("success");
-// });
 
 app.get("/checked", function (req, res) {
   return res.send(checked);
