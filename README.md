@@ -34,7 +34,7 @@
 - MVVM
 
 ## Backend:
-- Express server (GET, POST, DELETE selected cryptocurrencies to add to table)
+- Express server (GET, POST, DELETE selected cryptocurrencies)
 
 ## 3rd-party API:
 - [CoinGecko](https://www.coingecko.com/en/api/documentation)
