@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useFetch from "../helpers/useFetch";
 
 import Box from "@mui/material/Box";
@@ -11,8 +11,18 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function CryptoSearch({ cryptos }): JSX.Element {
-  const [checkedCrypto, setCheckedCrypto] = useState([]);
+interface cryptoData {
+  id: string;
+  symbol: string;
+  name: string;
+}
+
+export default function CryptoSearch({
+  cryptos,
+}: {
+  cryptos: string[];
+}): JSX.Element {
+  const [checkedCrypto, setCheckedCrypto] = useState<string[]>([]);
   const { post, del } = useFetch("http://localhost:8080/");
 
   const handleSelection = (event, values) => {
@@ -65,7 +75,7 @@ export default function CryptoSearch({ cryptos }): JSX.Element {
           id="search-crypto"
           options={cryptos || []}
           onChange={handleSelection}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option: cryptoData) => option.name}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox

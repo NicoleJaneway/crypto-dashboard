@@ -70,6 +70,17 @@ interface cryptoData {
   last_updated: number;
 }
 
+interface rowData {
+  id: string;
+  symbol: string;
+  name: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number;
+  price_change_percentage_24h: number;
+  circulating_supply: number;
+}
+
 export default function PriceTable({
   cryptoList,
   setCryptoList,
@@ -81,15 +92,15 @@ export default function PriceTable({
 
   const { fiat } = useContext(FiatContext);
 
-  const [market, setMarket] = useState([]);
-  const [baseRows, setBaseRows] = useState([]);
-  const [rows, setRows] = useState([]);
-  const [TrackedCrypto, setTrackedCrypto] = useState([]);
+  const [market, setMarket] = useState<cryptoData[]>([]);
+  const [baseRows, setBaseRows] = useState<rowData[]>([]);
+  const [rows, setRows] = useState<rowData[]>([]);
+  const [TrackedCrypto, setTrackedCrypto] = useState<string[]>([]);
 
   // GET marketData from API
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
-      .then((data: Array<cryptoData>) => {
+      .then((data: cryptoData[]) => {
         setMarket(data);
       })
       .catch((error) => console.log("Could not load crypto", error));
