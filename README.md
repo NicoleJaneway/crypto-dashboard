@@ -34,7 +34,7 @@
 - MVVM
 
 ## Backend:
-- express server (GET, POST, DELETE selected cryptocurrencies to add to table)
+- Express server (GET, POST, DELETE selected cryptocurrencies to add to table)
 
 ## 3rd-party API:
 - [CoinGecko](https://www.coingecko.com/en/api/documentation)
@@ -63,16 +63,16 @@
 
 
 #### Search functionality allows user to add additional cryptocurrencies from the top 100 to the table
-*Each change to the currencies selected makes a POST / DELETE request to express backend*
+*Each change to the currencies selected makes a POST / DELETE request to Express backend*
 ![search](img/01_search.png)
 
 
 #### Load button adds selected cryptocurrencies to the table
-*Makes a GET request to express backend*
+*Makes a GET request to Express backend*
 ![load](img/02_load.png)
 
 
 
 #### Removing a cryptocurrency from the selected list will also remove it from the table the next time the table is loaded
-*Makes a DELETE request to express backend*
+*Makes a DELETE request to Express backend*
 ![remove](img/03_remove.png)
