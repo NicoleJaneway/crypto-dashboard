@@ -12,7 +12,7 @@ import TableHead from "./TableHeader";
 import Row from "./Row";
 import LoadTable from "./LoadTable";
 
-const listProperties = [
+const listProperties: string[] = [
   "market_cap_rank",
   "id",
   "name",
@@ -37,56 +37,62 @@ const makeBaseTable = (input, listProperties) => {
   return filtered;
 };
 
-export default function PriceTable({ cryptoList, setCryptoList }): JSX.Element {
+// const IData = {
+//   id: string;
+//   symbol: string;
+//   name: string;
+//   image: string;
+//   current_price: number;
+//   market_cap: number;
+//   market_cap_rank: number;
+//   fully_diluted_valuation: number;
+//   total_volume: number;
+//   high_24h: number;
+//   low_24h: number;
+//   price_change_24h: number;
+//   price_change_percentage_24h: number;
+//   market_cap_change_24h: number;
+//   market_cap_change_percentage_24h: number;
+//   circulating_supply: number;
+//   total_supply: number;
+//   max_supply: number;
+//   ath: number;
+//   ath_change_percentage: number;
+//   ath_date: string;
+//   atl: number;
+//   atl_change_percentage: number;
+//   atl_date: string;
+//   roi: {
+//     times: number;
+//     currency: string;
+//     percentage: number;
+//   };
+//   last_updated: number;
+// }
+
+export default function PriceTable({
+  cryptoList,
+  setCryptoList,
+}: {
+  cryptoList: string[];
+  setCryptoList: React.Dispatch<React.SetStateAction<string[]>>;
+}): JSX.Element {
   const { get } = useFetch("https://api.coingecko.com/api/v3/");
 
   const { fiat } = useContext(FiatContext);
 
   const [market, setMarket] = useState([]);
+  const [baseRows, setBaseRows] = useState([]);
   const [rows, setRows] = useState([]);
   const [TrackedCrypto, setTrackedCrypto] = useState([]);
 
   // GET marketData from API
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
-      .then(
-        (
-          data: {
-            id: string;
-            symbol: string;
-            name: string;
-            image: string;
-            current_price: number;
-            market_cap: number;
-            market_cap_rank: number;
-            fully_diluted_valuation: number;
-            total_volume: number;
-            high_24h: number;
-            low_24h: number;
-            price_change_24h: number;
-            price_change_percentage_24h: number;
-            market_cap_change_24h: number;
-            market_cap_change_percentage_24h: number;
-            circulating_supply: number;
-            total_supply: number;
-            max_supply: number;
-            ath: number;
-            ath_change_percentage: number;
-            ath_date: string;
-            atl: number;
-            atl_change_percentage: number;
-            atl_date: string;
-            roi: {
-              times: number;
-              currency: string;
-              percentage: number;
-            };
-            last_updated: number;
-          }[]
-        ): void => {
-          setMarket(data);
-        }
-      )
+      .then((data) => {
+        // @ts-ignore
+        setMarket(data);
+      })
       .catch((error) => console.log("Could not load crypto", error));
   }, [fiat]);
 
@@ -118,6 +124,7 @@ export default function PriceTable({ cryptoList, setCryptoList }): JSX.Element {
   useEffect(() => {
     if (market.length > 0) {
       let info = market.filter((obj) => obj.market_cap_rank < 6);
+      setBaseRows(makeBaseTable(info, listProperties));
       setRows(makeBaseTable(info, listProperties));
     }
   }, [market, fiat]);
@@ -126,15 +133,13 @@ export default function PriceTable({ cryptoList, setCryptoList }): JSX.Element {
   useEffect(() => {
     if (TrackedCrypto.length > 0) {
       let info = [];
-      console.log("TrackedCrypto:", TrackedCrypto);
       TrackedCrypto.forEach((id) => {
         let tracked = market.filter((obj) => obj.id === id)[0];
         info.push(tracked);
       });
-      console.log({ info });
-      console.log("Rows:", rows.concat(makeBaseTable(info, listProperties)));
-      // @ts-ignore
-      setRows(rows.concat(makeBaseTable(info, listProperties)));
+      setRows(baseRows.concat(makeBaseTable(info, listProperties)));
+    } else {
+      setRows(baseRows);
     }
   }, [TrackedCrypto]);
 

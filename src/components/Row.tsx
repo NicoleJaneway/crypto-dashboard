@@ -8,8 +8,6 @@ import { FiatContext } from "../helpers/FiatContext";
 export default function Row({ row }): JSX.Element {
   const { fiat } = useContext(FiatContext);
 
-  console.log({ row });
-
   return (
     <>
       <TableRow
