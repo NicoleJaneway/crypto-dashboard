@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import useFetch from "../helpers/useFetch";
 
-export default function LoadTable({ setTrackedCrypto }) {
+export default function LoadTable({ setTrackedCrypto }): JSX.Element {
   const { get } = useFetch("http://localhost:8080/");
 
   const handleClick = () => {
@@ -21,7 +21,7 @@ export default function LoadTable({ setTrackedCrypto }) {
         justifyContent: "center",
       }}
     >
-      <Button variant="contained" onClick={handleClick}>
+      <Button variant="outlined" color="warning" onClick={handleClick}>
         Load Table
       </Button>
     </div>

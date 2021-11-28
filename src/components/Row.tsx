@@ -1,14 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 
 import { FiatContext } from "../helpers/FiatContext";
 
-export default function Row({ row }) {
+export default function Row({ row }): JSX.Element {
   const { fiat } = useContext(FiatContext);
-
-  console.log({ row });
 
   return (
     <>

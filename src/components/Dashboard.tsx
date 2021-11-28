@@ -4,21 +4,7 @@ import FiatSelector from "./FiatSelector";
 import PriceTable from "./PriceTable";
 import CryptoSearch from "./CryptoSearch";
 
-
-function createData(
-  rank: number,
-  id: string,
-  name: string,
-  symbol: string,
-  price: number,
-  percChange: number,
-  marketCap: number,
-  supply: number
-) {
-  return { rank, id, name, symbol, price, percChange, marketCap, supply };
-}
-
-export default function Dashboard() {
+export default function Dashboard(): JSX.Element {
   const [cryptoList, setCryptoList] = useState([]);
 
   return (

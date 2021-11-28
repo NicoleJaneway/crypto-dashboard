@@ -12,7 +12,7 @@ import TableHead from "./TableHeader";
 import Row from "./Row";
 import LoadTable from "./LoadTable";
 
-const listProperties = [
+const listProperties: string[] = [
   "market_cap_rank",
   "id",
   "name",
@@ -23,7 +23,7 @@ const listProperties = [
   "circulating_supply",
 ];
 
-const makeBaseTable = (input, listProperties) => {
+const makeTable = (input, listProperties) => {
   let filtered = [];
 
   input.forEach((obj) => {
@@ -37,88 +37,90 @@ const makeBaseTable = (input, listProperties) => {
   return filtered;
 };
 
-export default function PriceTable({ cryptoList, setCryptoList }) {
+interface cryptoData {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number;
+  fully_diluted_valuation: number;
+  total_volume: number;
+  high_24h: number;
+  low_24h: number;
+  price_change_24h: number;
+  price_change_percentage_24h: number;
+  market_cap_change_24h: number;
+  market_cap_change_percentage_24h: number;
+  circulating_supply: number;
+  total_supply: number;
+  max_supply: number;
+  ath: number;
+  ath_change_percentage: number;
+  ath_date: string;
+  atl: number;
+  atl_change_percentage: number;
+  atl_date: string;
+  roi: {
+    times: number;
+    currency: string;
+    percentage: number;
+  };
+  last_updated: number;
+}
+
+interface rowData {
+  id: string;
+  symbol: string;
+  name: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number;
+  price_change_percentage_24h: number;
+  circulating_supply: number;
+}
+
+export default function PriceTable({
+  cryptoList,
+  setCryptoList,
+}: {
+  cryptoList: string[];
+  setCryptoList: React.Dispatch<React.SetStateAction<string[]>>;
+}): JSX.Element {
   const { get } = useFetch("https://api.coingecko.com/api/v3/");
 
   const { fiat } = useContext(FiatContext);
 
-  const [market, setMarket] = useState([]);
-  const [rows, setRows] = useState([]);
-  const [TrackedCrypto, setTrackedCrypto] = useState([]);
+  const [market, setMarket] = useState<cryptoData[]>([]);
+  const [baseRows, setBaseRows] = useState<rowData[]>([]);
+  const [rows, setRows] = useState<rowData[]>([]);
+  const [TrackedCrypto, setTrackedCrypto] = useState<string[]>([]);
 
   // GET marketData from API
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
-      .then(
-        (
-          data: {
-            id: string;
-            symbol: string;
-            name: string;
-            image: string;
-            current_price: number;
-            market_cap: number;
-            market_cap_rank: number;
-            fully_diluted_valuation: number;
-            total_volume: number;
-            high_24h: number;
-            low_24h: number;
-            price_change_24h: number;
-            price_change_percentage_24h: number;
-            market_cap_change_24h: number;
-            market_cap_change_percentage_24h: number;
-            circulating_supply: number;
-            total_supply: number;
-            max_supply: number;
-            ath: number;
-            ath_change_percentage: number;
-            ath_date: string;
-            atl: number;
-            atl_change_percentage: number;
-            atl_date: string;
-            roi: {
-              times: number;
-              currency: string;
-              percentage: number;
-            };
-            last_updated: number;
-          }[]
-        ): void => {
-          setMarket(data);
-        }
-      )
+      .then((data: cryptoData[]) => {
+        setMarket(data);
+      })
       .catch((error) => console.log("Could not load crypto", error));
   }, [fiat]);
 
   // Create data to send to CryptoSearch
   useEffect(() => {
-    const makeList = (input) => {
-      let info = input.filter((obj) => obj.market_cap_rank > 5);
-      let filtered = [];
-      const listProperties = ["id", "name", "symbol"];
-
-      info.forEach((obj) => {
-        let newObj = {};
-        listProperties.forEach((prop) => {
-          newObj[prop] = obj[prop];
-        });
-        filtered.push(newObj);
-      });
-
-      return filtered;
-    };
-
-    // @ts-ignore
     if (market.length > 0 && cryptoList.length === 0) {
-      setCryptoList(makeList(market));
+      let info = market.filter((obj) => obj.market_cap_rank > 5);
+      setCryptoList(makeTable(info, ["id", "name", "symbol"]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [market]);
 
   // Make rows for base table
   useEffect(() => {
     if (market.length > 0) {
       let info = market.filter((obj) => obj.market_cap_rank < 6);
-      setRows(makeBaseTable(info, listProperties));
+      setBaseRows(makeTable(info, listProperties));
+      setRows(makeTable(info, listProperties));
     }
   }, [market, fiat]);
 
@@ -126,16 +128,15 @@ export default function PriceTable({ cryptoList, setCryptoList }) {
   useEffect(() => {
     if (TrackedCrypto.length > 0) {
       let info = [];
-      console.log("TrackedCrypto:", TrackedCrypto);
       TrackedCrypto.forEach((id) => {
         let tracked = market.filter((obj) => obj.id === id)[0];
         info.push(tracked);
       });
-      console.log({ info });
-      console.log("Rows:", rows.concat(makeBaseTable(info, listProperties)));
-      // @ts-ignore
-      setRows(rows.concat(makeBaseTable(info, listProperties)));
+      setRows(baseRows.concat(makeTable(info, listProperties)));
+    } else {
+      setRows(baseRows);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TrackedCrypto]);
 
   return (
