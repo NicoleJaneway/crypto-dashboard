@@ -1,6 +1,6 @@
 # Crypto Dashboard
 
-demo
+[demo](https://crypto-dashboard-with-api.herokuapp.com/)
 
 Overview:
 
@@ -45,3 +45,8 @@ Accessibility considerations:
 - Avoid red / green colors that are difficult for colorblind individuals to disambiguate
 
 Screenshots:
+
+![base table](img/00_base_table.png)
+![search](img/01_search.png)
+![load](img/02_load.png)
+![remove](img/03_remove.png)
