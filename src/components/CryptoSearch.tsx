@@ -54,7 +54,7 @@ export default function CryptoSearch({ cryptos }): JSX.Element {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "35ch" },
+          "& > :not(style)": { m: 1, width: "75ch" },
         }}
         noValidate
         autoComplete="off"

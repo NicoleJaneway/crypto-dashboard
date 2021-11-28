@@ -23,7 +23,7 @@ const listProperties: string[] = [
   "circulating_supply",
 ];
 
-const makeBaseTable = (input, listProperties) => {
+const makeTable = (input, listProperties) => {
   let filtered = [];
 
   input.forEach((obj) => {
@@ -37,38 +37,38 @@ const makeBaseTable = (input, listProperties) => {
   return filtered;
 };
 
-// const IData = {
-//   id: string;
-//   symbol: string;
-//   name: string;
-//   image: string;
-//   current_price: number;
-//   market_cap: number;
-//   market_cap_rank: number;
-//   fully_diluted_valuation: number;
-//   total_volume: number;
-//   high_24h: number;
-//   low_24h: number;
-//   price_change_24h: number;
-//   price_change_percentage_24h: number;
-//   market_cap_change_24h: number;
-//   market_cap_change_percentage_24h: number;
-//   circulating_supply: number;
-//   total_supply: number;
-//   max_supply: number;
-//   ath: number;
-//   ath_change_percentage: number;
-//   ath_date: string;
-//   atl: number;
-//   atl_change_percentage: number;
-//   atl_date: string;
-//   roi: {
-//     times: number;
-//     currency: string;
-//     percentage: number;
-//   };
-//   last_updated: number;
-// }
+interface cryptoData {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number;
+  fully_diluted_valuation: number;
+  total_volume: number;
+  high_24h: number;
+  low_24h: number;
+  price_change_24h: number;
+  price_change_percentage_24h: number;
+  market_cap_change_24h: number;
+  market_cap_change_percentage_24h: number;
+  circulating_supply: number;
+  total_supply: number;
+  max_supply: number;
+  ath: number;
+  ath_change_percentage: number;
+  ath_date: string;
+  atl: number;
+  atl_change_percentage: number;
+  atl_date: string;
+  roi: {
+    times: number;
+    currency: string;
+    percentage: number;
+  };
+  last_updated: number;
+}
 
 export default function PriceTable({
   cryptoList,
@@ -89,8 +89,7 @@ export default function PriceTable({
   // GET marketData from API
   useEffect(() => {
     get(`coins/markets?vs_currency=${fiat}`)
-      .then((data) => {
-        // @ts-ignore
+      .then((data: Array<cryptoData>) => {
         setMarket(data);
       })
       .catch((error) => console.log("Could not load crypto", error));
@@ -98,34 +97,19 @@ export default function PriceTable({
 
   // Create data to send to CryptoSearch
   useEffect(() => {
-    const makeList = (input) => {
-      let info = input.filter((obj) => obj.market_cap_rank > 5);
-      let filtered = [];
-      const listProperties = ["id", "name", "symbol"];
-
-      info.forEach((obj) => {
-        let newObj = {};
-        listProperties.forEach((prop) => {
-          newObj[prop] = obj[prop];
-        });
-        filtered.push(newObj);
-      });
-
-      return filtered;
-    };
-
-    // @ts-ignore
     if (market.length > 0 && cryptoList.length === 0) {
-      setCryptoList(makeList(market));
+      let info = market.filter((obj) => obj.market_cap_rank > 5);
+      setCryptoList(makeTable(info, ["id", "name", "symbol"]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [market]);
 
   // Make rows for base table
   useEffect(() => {
     if (market.length > 0) {
       let info = market.filter((obj) => obj.market_cap_rank < 6);
-      setBaseRows(makeBaseTable(info, listProperties));
-      setRows(makeBaseTable(info, listProperties));
+      setBaseRows(makeTable(info, listProperties));
+      setRows(makeTable(info, listProperties));
     }
   }, [market, fiat]);
 
@@ -137,10 +121,11 @@ export default function PriceTable({
         let tracked = market.filter((obj) => obj.id === id)[0];
         info.push(tracked);
       });
-      setRows(baseRows.concat(makeBaseTable(info, listProperties)));
+      setRows(baseRows.concat(makeTable(info, listProperties)));
     } else {
       setRows(baseRows);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TrackedCrypto]);
 
   return (
