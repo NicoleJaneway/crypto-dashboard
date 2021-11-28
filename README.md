@@ -1,48 +1,58 @@
 # Crypto Dashboard
 
-[demo](https://crypto-dashboard-with-api.herokuapp.com/)
+[Crypto Dashboard](https://crypto-dashboard-with-api.herokuapp.com/) pulls latest cryptocurrency data to showcase price, market cap, supply, etc.  User can dynamically add additional cryptocurrencies to track in the table.
 
 ## Overview:
 
-- Component #1 - xyz
+- App
+ - Header
+  - Toggle
+ - Dashboard
+  - CryptoSearch
+  - FiatSelector
+  - Price Table
+   - Row
+   - LoadTable
 
 ## User interactions:
+- Dark mode
+- Search cryptocurrencies to dynamically add to the table
+- Select fiat currency
+- Table header tooltip explains relevant concepts on mouseover
 
-- Tooltip explains relevant concepts on mouseover
-- Text field to change comparator fiat currency
 
-## Material-UI:
-
+## Material-UI components:
+- Typography
+- Switch
+- Autocomplete
+- TextField
 - Table
 - Tooltip
-- Text field
 
 ## Architectural pattern:
 
 - MVVM
 
-## API:
+## Backend:
+- express server (GET, POST, DELETE selected cryptocurrencies to add to table)
 
-- [Coinbase](https://developers.coinbase.com/api/v2?javascript#)
-  - Payload:
-  - Response
+## 3rd-party API:
 - [CoinGecko](https://www.coingecko.com/en/api/documentation)
+  - Payload:
+  - Response:
 
-## Requirements:
-
-- App should be able to be interacted with in at least 3 different ways by the user
-- Use a specified architectural pattern (e.g. MVC, MVP, MVVM, etc.)
-- Integrate with a custom backed that uses CRUD operations
-- Integrate with 3rd party RESTful API
-- Use 5 UI components from material-ui/@core
-- Use reusable component
 
 ## Accessibility considerations:
 
-- Provide alt text on images
-- TextField with an id and label creates the proper markup
-- Use sufficient contrast between text and background color
+- Provide alt text on image (i.e. crypto logo)
+- Ids and labels create proper markup for screenreaders
+- Dark and light themes provide sufficient contrast between text and background color
 - Avoid red / green colors that are difficult for colorblind individuals to disambiguate
+
+## Installation and set up:
+- Using the command line, `git clone https://github.com/NicoleJaneway/crypto-dashboard.git`
+- `npm run build` to create an optimized production build
+- `npm start` to deploy
 
 ## Screenshots:
 
