@@ -2,8 +2,8 @@ import React, { useState, useMemo } from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import Header from "./components/Header";
-import Dashboard from "./components/Dashboard";
+import Header from "./view/Header";
+import Dashboard from "./view/Dashboard";
 
 import { ColorModeContext } from "./helpers/ColorModeContext";
 
