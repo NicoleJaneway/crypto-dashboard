@@ -10,7 +10,7 @@ export default function TrackedCryptoController({
   cryptoList: cryptoListData[];
 }): JSX.Element {
   const [checkedCrypto, setCheckedCrypto] = useState<string[]>([]);
-  const { post, del } = useFetch("/");
+  const { post, del } = useFetch("http://localhost:57145/");
 
   const handleSelection = (event: object, values: any) => {
     let ids = values.map((value) => value.id);
