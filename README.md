@@ -4,6 +4,15 @@
 
 ## Overview:
 
+Controller:
+- LoadTableController
+- MarketDataController
+- TrackedCryptoController
+
+Model:
+- MarketDataModel
+
+View:
 - App
  - Header
   - Toggle
@@ -12,7 +21,6 @@
   - FiatSelector
   - Price Table
    - Row
-   - LoadTable
 
 ## User interactions:
 - Dark mode
@@ -31,7 +39,7 @@
 
 ## Architectural pattern:
 
-- MVVM
+- MVC
 
 ## Backend:
 - Express server (GET, POST, DELETE selected cryptocurrencies)
@@ -65,6 +73,7 @@
 #### Search functionality allows user to add additional cryptocurrencies from the top 100 to the table
 *Each change to the currencies selected makes a POST / DELETE request to Express backend*
 ![search](img/01_search.png)
+
 
 
 #### Load button adds selected cryptocurrencies to the table
