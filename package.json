@@ -27,7 +27,7 @@
     "typescript": "^4.5.2"
   },
   "scripts": {
-    "start": "serve -s build && node server.js",
+    "start": "node server.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
