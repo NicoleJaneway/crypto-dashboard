@@ -54,9 +54,8 @@ View:
 
 ## Installation and set up:
 - Using the command line, `git clone https://github.com/NicoleJaneway/crypto-dashboard.git`
-- `npm install` to download required libraries
-- `npm run build` to create an optimized production build
-- `npm start` to deploy
+- `npm install` to download required libraries and create an optimized production build
+- `npm run start-local` to deploy to http://localhost:3000/
 
 ## Screenshots:
 
