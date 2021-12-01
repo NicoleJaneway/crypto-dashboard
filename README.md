@@ -5,22 +5,19 @@
 ## Overview:
 
 Controller:
-- LoadTableController
-- MarketDataController
-- TrackedCryptoController
+- MarketDataController: fetches market data for top 100 cryptocurrencies (by market cap) from [CoinGecko](https://www.coingecko.com/en/api/documentation)'s API
+- TrackedCryptoController: posts to / deletes from list of tracked cryptocurrencies on app's Express backend
+- LoadTableController: fetches list of tracked cryptocurrencies from app's Express backend
 
 Model:
-- MarketDataModel
+- MarketDataModel: formats market data for display in PriceTable component
 
 View:
-- App
- - Header
-  - Toggle
- - Dashboard
-  - CryptoSearch
-  - FiatSelector
-  - Price Table
-   - Row
+- App: contains Header and Dashboard components
+ - Header: contains icon, typography, and dark mode toggle components
+ - Dashboard: contains CryptoSearch, FiatSelector, and PriceTable components
+ - PriceTable: displays market data by mapping each row object to the reusable component Row
+
 
 ## User interactions:
 - Dark mode
@@ -29,7 +26,7 @@ View:
 - Table header tooltip explains relevant concepts on mouseover
 
 
-## Material-UI components:
+## [Material-UI](https://mui.com/) components:
 - Typography
 - Switch
 - Autocomplete
@@ -37,8 +34,8 @@ View:
 - Table
 - Tooltip
 
-## Architectural pattern:
 
+## Architectural pattern:
 - MVC
 
 ## Backend:
@@ -46,8 +43,6 @@ View:
 
 ## 3rd-party API:
 - [CoinGecko](https://www.coingecko.com/en/api/documentation)
-  - Payload:
-  - Response:
 
 
 ## Accessibility considerations:
