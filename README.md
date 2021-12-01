@@ -39,7 +39,9 @@ View:
 - MVC: controller loads the data, model formats the data, view displays the data to the end user
 
 ## Backend:
-- Express server (GET, POST, DELETE selected cryptocurrencies)
+Express server
+- Payload: list of selected cryptocurrencies
+- Response: GET, POST, DELETE requests send 200 response along with payload
 
 ## 3rd-party API:
 - [CoinGecko](https://www.coingecko.com/en/api/documentation)
