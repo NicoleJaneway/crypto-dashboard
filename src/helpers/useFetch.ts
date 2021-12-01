@@ -31,7 +31,7 @@ export default function useFetch(baseUrl) {
         },
         body: JSON.stringify(body),
       })
-        .then((response) => response.json())
+        .then((response) => response)
         .then((data) => {
           if (!data) {
             setLoading(false);
@@ -56,7 +56,7 @@ export default function useFetch(baseUrl) {
         },
         body: JSON.stringify(body),
       })
-        .then((response) => response.json())
+        .then((response) => response)
         .then((data) => {
           if (!data) {
             setLoading(false);

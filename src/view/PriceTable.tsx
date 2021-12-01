@@ -22,7 +22,7 @@ export default function PriceTable({
           <TableHead />
           <TableBody>
             {rows?.map((row) => (
-              <Row row={row} />
+              <Row key={row.symbol} row={row} />
             ))}
           </TableBody>
         </Table>

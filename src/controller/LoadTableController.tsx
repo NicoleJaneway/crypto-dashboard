@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import useFetch from "../helpers/useFetch";
 
 export default function LoadTable({ setTrackedCrypto }): JSX.Element {
-  const { get } = useFetch("/");
+  const { get } = useFetch("http://localhost:8080/");
 
   const handleClick = () => {
     get("checked")

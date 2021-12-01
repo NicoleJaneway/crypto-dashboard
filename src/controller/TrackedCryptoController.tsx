@@ -10,18 +10,16 @@ export default function TrackedCryptoController({
   cryptoList: cryptoListData[];
 }): JSX.Element {
   const [checkedCrypto, setCheckedCrypto] = useState<string[]>([]);
-  const { post, del } = useFetch("/");
+  const { post, del } = useFetch("http://localhost:8080/");
 
   const handleSelection = (event: object, values: any) => {
     let ids = values.map((value) => value.id);
     setCheckedCrypto(values.map((value) => value.id));
     let diff = ids.filter((x) => !checkedCrypto.includes(x));
-    console.log("1: ", diff);
     if (checkedCrypto.filter((x) => !ids.includes(x)).length > 0) {
       checkedCrypto
         .filter((x) => !ids.includes(x))
         .forEach((element) => diff.push(element));
-      console.log("2: ", diff);
     }
     if (values.length > 0 && values.length > checkedCrypto.length) {
       let postCoin = diff[0];
