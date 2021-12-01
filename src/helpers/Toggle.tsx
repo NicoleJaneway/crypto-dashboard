@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 
 import { ColorModeContext } from "./ColorModeContext";
 

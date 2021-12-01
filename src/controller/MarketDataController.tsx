@@ -24,6 +24,7 @@ export default function MarketDataController({
         setMarket(data);
       })
       .catch((error) => console.log("Could not load crypto", error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fiat]);
 
   return (

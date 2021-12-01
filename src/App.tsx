@@ -17,6 +17,7 @@ export default function App(): JSX.Element {
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
