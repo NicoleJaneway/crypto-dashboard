@@ -26,7 +26,7 @@ View:
 - Table header tooltip explains relevant concepts on mouseover
 
 
-## [Material-UI](https://mui.com/) components:
+## Material-UI components:
 - Typography
 - Switch
 - Autocomplete
