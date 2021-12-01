@@ -36,7 +36,7 @@ View:
 
 
 ## Architectural pattern:
-- MVC
+- MVC: controller loads the data, model formats the data, view displays the data to the end user
 
 ## Backend:
 - Express server (GET, POST, DELETE selected cryptocurrencies)
