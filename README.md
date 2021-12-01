@@ -1,6 +1,6 @@
 # Crypto Dashboard
 
-[Crypto Dashboard](https://crypto-dashboard-with-api.herokuapp.com/) pulls latest cryptocurrency data to showcase price, market cap, supply, etc.  User can dynamically add additional cryptocurrencies to track in the table.
+[Crypto Dashboard](https://crypto-dashboard-with-api.herokuapp.com/) pulls latest cryptocurrency data to showcase price, market cap, supply, etc.  User can add additional cryptocurrencies to track in the table.
 
 ## Overview:
 
@@ -21,7 +21,7 @@ View:
 
 ## User interactions:
 - Dark mode
-- Search cryptocurrencies to dynamically add to the table
+- Search cryptocurrencies to add to the table
 - Select fiat currency
 - Table header tooltip explains relevant concepts on mouseover
 
