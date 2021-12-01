@@ -6,7 +6,7 @@
 
 Controller:
 - MarketDataController: fetches market data for top 100 cryptocurrencies (by market cap) from [CoinGecko](https://www.coingecko.com/en/api/documentation)'s API
-- TrackedCryptoController: posts to / deletes from list of tracked cryptocurrencies on app's Express backend
+- TrackedCryptoController: posts to and deletes from list of tracked cryptocurrencies on app's Express backend
 - LoadTableController: fetches list of tracked cryptocurrencies from app's Express backend
 
 Model:
