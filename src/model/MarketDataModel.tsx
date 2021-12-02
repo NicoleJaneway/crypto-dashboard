@@ -61,10 +61,10 @@ export default function MarketDataModel({
 
   // Make rows for tracked crypto
   useEffect(() => {
-    if (TrackedCrypto.length > 0) {
+    if (market.length > 0 && TrackedCrypto.length > 0) {
       let info = [];
-      TrackedCrypto.forEach((id) => {
-        let tracked = market.filter((obj) => obj.id === id)[0];
+      TrackedCrypto.forEach((name) => {
+        let tracked = market.filter((obj) => obj.name === name)[0];
         info.push(tracked);
       });
       setRows(baseRows.concat(makeTable(info, listProperties)));

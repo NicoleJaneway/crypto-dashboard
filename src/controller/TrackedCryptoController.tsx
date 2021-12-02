@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useFetch from "../helpers/useFetch";
 
 import { cryptoListData } from "../types";
@@ -10,11 +10,36 @@ export default function TrackedCryptoController({
   cryptoList: cryptoListData[];
 }): JSX.Element {
   const [checkedCrypto, setCheckedCrypto] = useState<string[]>([]);
-  const { post, del } = useFetch("/");
+  const [display, setDisplay] = useState<
+    { name: string; symbol: string; id: string }[]
+  >([]);
+  const { get, post, del } = useFetch("http://localhost:8080/");
+
+  useEffect(() => {
+    get("checked")
+      .then((data: string[]) => {
+        setCheckedCrypto(data);
+        console.log(data);
+        const input = [];
+        data.forEach((crypto: string) => {
+          const obj: { name: string } = { name: crypto };
+          input.push(obj);
+        });
+        setDisplay(input);
+      })
+      .catch((error) => console.log("Could not load crypto", error));
+  }, []);
 
   const handleSelection = (event: object, values: any) => {
-    let ids = values.map((value) => value.id);
-    setCheckedCrypto(values.map((value) => value.id));
+    let ids = values.map((value) => value.name);
+    setDisplay(
+      values.map((value) => ({
+        name: value.name,
+        symbol: value.symbol,
+        id: value.id,
+      }))
+    );
+    setCheckedCrypto(values.map((value) => value.name));
     let diff = ids.filter((x) => !checkedCrypto.includes(x));
     if (checkedCrypto.filter((x) => !ids.includes(x)).length > 0) {
       checkedCrypto
@@ -45,6 +70,10 @@ export default function TrackedCryptoController({
   };
 
   return (
-    <CryptoSearch cryptoList={cryptoList} handleSelection={handleSelection} />
+    <CryptoSearch
+      cryptoList={cryptoList}
+      handleSelection={handleSelection}
+      display={display}
+    />
   );
 }

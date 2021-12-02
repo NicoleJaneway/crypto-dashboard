@@ -1,8 +1,9 @@
 import Button from "@mui/material/Button";
+import { useEffect } from "react";
 import useFetch from "../helpers/useFetch";
 
 export default function LoadTable({ setTrackedCrypto }): JSX.Element {
-  const { get } = useFetch("/");
+  const { get } = useFetch("http://localhost:8080/");
 
   const handleClick = () => {
     get("checked")
@@ -11,6 +12,10 @@ export default function LoadTable({ setTrackedCrypto }): JSX.Element {
       })
       .catch((error) => console.log("Could not load crypto", error));
   };
+
+  useEffect(() => {
+    handleClick();
+  });
 
   return (
     <div

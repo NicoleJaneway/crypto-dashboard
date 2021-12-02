@@ -6,6 +6,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import { cryptoListData } from "../types";
+import React from "react";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -13,9 +14,11 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default function CryptoSearch({
   cryptoList,
   handleSelection,
+  display,
 }: {
   cryptoList: cryptoListData[];
   handleSelection: (event: object, values: any) => void;
+  display: { name: string }[];
 }): JSX.Element {
   return (
     <>
@@ -31,17 +34,12 @@ export default function CryptoSearch({
           multiple
           disableCloseOnSelect
           id="search-crypto"
+          value={display}
           options={cryptoList || []}
           onChange={handleSelection}
           getOptionLabel={(option: cryptoListData) => option.name}
           renderOption={(props, option, { selected }) => (
             <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
               {option.name + " (" + option.symbol.toUpperCase() + ")"}
             </li>
           )}
