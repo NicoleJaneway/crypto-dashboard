@@ -28,6 +28,7 @@ export default function TrackedCryptoController({
         setDisplay(input);
       })
       .catch((error) => console.log("Could not load crypto", error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSelection = (event: object, values: any) => {
