@@ -13,7 +13,7 @@ export default function TrackedCryptoController({
   const [display, setDisplay] = useState<
     { name: string; symbol: string; id: string }[]
   >([]);
-  const { get, post, del } = useFetch("http://localhost:80/");
+  const { get, post, del } = useFetch("/");
 
   useEffect(() => {
     get("checked")
