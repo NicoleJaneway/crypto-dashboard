@@ -27,7 +27,7 @@
     "typescript": "^4.5.2"
   },
   "scripts": {
-    "heroku-start": "PORT=8080 node server.js",
+    "heroku-start": "node server.js",
     "local-start": "PORT=8080 node server.js",
     "dev": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
