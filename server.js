@@ -5,6 +5,8 @@ app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
 const cors = require("cors");
 app.use(cors());
+require('dotenv').config()
+
 
 let checked = [];
 
